@@ -6,9 +6,9 @@
 [ext_resource path="res://Sprites/player_1_standing.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/player_1_attacking.png" type="Texture" id=5]
 [ext_resource path="res://Sprites/player_1_rolling.png" type="Texture" id=6]
-[ext_resource path="res://Scenes/rolling.gd" type="Script" id=7]
+[ext_resource path="res://Scripts/rolling.gd" type="Script" id=7]
 [ext_resource path="res://Sprites/player_1_thrown.png" type="Texture" id=8]
-[ext_resource path="res://Scenes/thrown.gd" type="Script" id=9]
+[ext_resource path="res://Scripts/thrown.gd" type="Script" id=9]
 [ext_resource path="res://Sprites/player_1_hurt.png" type="Texture" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -16,6 +16,7 @@
 [sub_resource type="RectangleShape2D" id=2]
 
 [node name="player1" type="KinematicBody2D"]
+z_as_relative = false
 script = ExtResource( 1 )
 
 [node name="running" type="Sprite" parent="."]

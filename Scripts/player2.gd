@@ -37,6 +37,11 @@ var other_player
 var am_rolling = false
 var am_thrown = false
 
+#Score
+var total_stuff
+var current_stuff
+var in_elevator = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	other_player = self.get_parent().find_node("player1")
