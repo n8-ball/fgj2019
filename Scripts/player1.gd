@@ -28,7 +28,7 @@ var attacking = 0
 
 #Attacking
 var attacking_cooldown = 0.3
-var punch_stun_timer = 0.6
+var punch_stun_timer = 2
 var throw_stun_timer = 5
 var stun_timer = 0
 var am_hit = 0
@@ -36,6 +36,11 @@ var things_hit
 var other_player
 var am_rolling = false
 var am_thrown = false
+
+#Score
+var total_stuff
+var current_stuff
+var in_elevator = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

@@ -6,6 +6,7 @@ var has_moved = 0
 var speed_default = 5
 var child = null
 var childFound = false
+var move_up = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -13,8 +14,6 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	for i in range(1000):
-		print("slowdown")
 	if has_moved < need_to_move:
 		self.global_position += Vector2(0, -speed_default)
 		has_moved += speed_default
@@ -27,3 +26,11 @@ func _process(delta):
 		child = child.get_collider()
 	if childFound:
 		child.global_position = self.global_position
+		child.total_stuff += child.current_stuff
+		child.current_stuff = 0
+		child.in_elevator = true
+	if move_up:
+		self.global_position += Vector2(0, -speed_default)
+
+func move_offscreen():
+	move_up = true
