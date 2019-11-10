@@ -4,7 +4,6 @@ extends KinematicBody2D
 var need_to_move = 900
 var has_moved = 0
 var speed_default = 5
-var in_position = false
 var child = null
 var childFound = false
 
@@ -14,6 +13,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	for i in range(1000):
+		print("slowdown")
 	if has_moved < need_to_move:
 		self.global_position += Vector2(0, -speed_default)
 		has_moved += speed_default
