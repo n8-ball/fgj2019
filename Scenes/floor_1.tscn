@@ -11,7 +11,7 @@
 [ext_resource path="res://Scenes/player2.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/player1.tscn" type="PackedScene" id=10]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 10, 450 )
 
 [node name="floor_1" type="Node2D"]
@@ -39,13 +39,13 @@ texture = ExtResource( 2 )
 
 [node name="left_wall_box" type="CollisionShape2D" parent="building/left_wall"]
 position = Vector2( -510, 80 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="right_wall" type="StaticBody2D" parent="building"]
 
 [node name="right_wall_box" type="CollisionShape2D" parent="building/right_wall"]
 position = Vector2( 510, 80 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="left_elevator" parent="." instance=ExtResource( 3 )]
 position = Vector2( 410, 1010 )
@@ -86,6 +86,9 @@ position = Vector2( 960, 170 )
 [node name="escalator_half_right" parent="." instance=ExtResource( 6 )]
 position = Vector2( 857.595, 776.973 )
 
+[node name="escalator_half_right2" parent="." instance=ExtResource( 6 )]
+position = Vector2( 669.062, 278.57 )
+
 [node name="escalator_full_left" parent="." instance=ExtResource( 7 )]
 position = Vector2( 460, 480 )
 
@@ -99,7 +102,7 @@ position = Vector2( 460, 880 )
 position = Vector2( 460, 1080 )
 
 [node name="player2" parent="." instance=ExtResource( 9 )]
-position = Vector2( 1357.41, 720.135 )
+position = Vector2( 969.088, 155.97 )
 
 [node name="player1" parent="." instance=ExtResource( 10 )]
-position = Vector2( 532.113, 792.367 )
+position = Vector2( 919.897, 153.054 )

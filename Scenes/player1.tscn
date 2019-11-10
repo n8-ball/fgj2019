@@ -1,12 +1,19 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scripts/player1.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/player1.png" type="Texture" id=2]
 [ext_resource path="res://Scripts/running.gd" type="Script" id=3]
 [ext_resource path="res://Sprites/player_1_standing.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/player_1_attacking.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/player_1_rolling.png" type="Texture" id=6]
+[ext_resource path="res://Scenes/rolling.gd" type="Script" id=7]
+[ext_resource path="res://Sprites/player_1_thrown.png" type="Texture" id=8]
+[ext_resource path="res://Scenes/thrown.gd" type="Script" id=9]
+[ext_resource path="res://Sprites/player_1_hurt.png" type="Texture" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
+
+[sub_resource type="RectangleShape2D" id=2]
 
 [node name="player1" type="KinematicBody2D"]
 script = ExtResource( 1 )
@@ -27,7 +34,32 @@ texture = ExtResource( 5 )
 offset = Vector2( 0, -27 )
 hframes = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="rolling" type="Sprite" parent="."]
+texture = ExtResource( 6 )
+offset = Vector2( 0, -27 )
+vframes = 2
+hframes = 4
+script = ExtResource( 7 )
+
+[node name="thrown" type="Sprite" parent="."]
+texture = ExtResource( 8 )
+offset = Vector2( 0, -27 )
+vframes = 2
+hframes = 4
+script = ExtResource( 9 )
+
+[node name="hurt" type="Sprite" parent="."]
+texture = ExtResource( 10 )
+offset = Vector2( 0, -27 )
+
+[node name="hurt_box" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -25 )
 scale = Vector2( 1.2, 2.5 )
 shape = SubResource( 1 )
+
+[node name="fist" type="Area2D" parent="."]
+
+[node name="fist_box" type="CollisionShape2D" parent="fist"]
+position = Vector2( 12, -24.682 )
+shape = SubResource( 2 )
+disabled = true
