@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Sprites/Building/stair_doors.png" type="Texture" id=1]
+
+[node name="open" type="Sprite"]
+z_index = -2
+z_as_relative = false
+texture = ExtResource( 1 )
+offset = Vector2( 0, -36 )

@@ -1,6 +1,6 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://Scripts/floor2.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/floor_generic.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Building/placeholder.jpeg" type="Texture" id=2]
 [ext_resource path="res://Sprites/Building/building.png" type="Texture" id=3]
 [ext_resource path="res://Scenes/left_elevator.tscn" type="PackedScene" id=4]
@@ -9,42 +9,38 @@
 [ext_resource path="res://Scenes/escalator_half_right.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/escalator_full_left.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/escalator_full_right.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Scenes/player2.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Scenes/player1.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Sprites/Building/main_door.png" type="Texture" id=12]
-[ext_resource path="res://Scenes/door.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Scenes/player1.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/player2.tscn" type="PackedScene" id=11]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 10, 450 )
+extents = Vector2( 30, 450 )
 
 [node name="floor_2" type="Node2D"]
+z_index = -20
+z_as_relative = false
 script = ExtResource( 1 )
 
 [node name="sky" type="Sprite" parent="."]
 self_modulate = Color( 0.717647, 0.968627, 0.980392, 1 )
-scale = Vector2( 0.702061, 0.358242 )
-z_index = -40
-z_as_relative = false
+scale = Vector2( 0.700979, 0.368597 )
 texture = ExtResource( 2 )
 centered = false
 
 [node name="building" type="Sprite" parent="."]
 self_modulate = Color( 0.690196, 0.690196, 0.690196, 1 )
 position = Vector2( 960, 540 )
-z_index = -20
-z_as_relative = false
 texture = ExtResource( 3 )
 
 [node name="left_wall" type="StaticBody2D" parent="building"]
 
 [node name="left_wall_box" type="CollisionShape2D" parent="building/left_wall"]
-position = Vector2( -510, 80 )
+position = Vector2( -530, 80 )
 shape = SubResource( 1 )
 
 [node name="right_wall" type="StaticBody2D" parent="building"]
 
 [node name="right_wall_box" type="CollisionShape2D" parent="building/right_wall"]
-position = Vector2( 510, 80 )
+position = Vector2( 530, 80 )
 shape = SubResource( 1 )
 
 [node name="left_elevator" parent="." instance=ExtResource( 4 )]
@@ -84,7 +80,13 @@ position = Vector2( 960, 270 )
 position = Vector2( 960, 170 )
 
 [node name="escalator_half_right" parent="." instance=ExtResource( 7 )]
-position = Vector2( 860, 780 )
+position = Vector2( 460, 880 )
+z_index = 5
+z_as_relative = false
+
+[node name="escalator_half_right4" parent="." instance=ExtResource( 7 )]
+position = Vector2( 970, 880 )
+scale = Vector2( -1, 1 )
 z_index = 5
 z_as_relative = false
 
@@ -93,8 +95,8 @@ position = Vector2( 500, 280 )
 z_index = 5
 z_as_relative = false
 
-[node name="escalator_full_left" parent="." instance=ExtResource( 8 )]
-position = Vector2( 460, 480 )
+[node name="escalator_full_left2" parent="." instance=ExtResource( 8 )]
+position = Vector2( 460, 580 )
 z_index = 5
 z_as_relative = false
 
@@ -103,27 +105,28 @@ position = Vector2( 460, 680 )
 z_index = 5
 z_as_relative = false
 
-[node name="escalator_full_left2" parent="." instance=ExtResource( 8 )]
-position = Vector2( 460, 880 )
-z_index = 5
-z_as_relative = false
-
 [node name="escalator_full_right" parent="." instance=ExtResource( 9 )]
-position = Vector2( 460, 1080 )
+position = Vector2( 460, 980 )
 z_index = 5
 z_as_relative = false
 
-[node name="player2" parent="." instance=ExtResource( 10 )]
-position = Vector2( 1044.96, 1047.96 )
+[node name="escalator_full_right2" parent="." instance=ExtResource( 8 )]
+position = Vector2( 460, 780 )
+z_index = 5
+z_as_relative = false
 
-[node name="player1" parent="." instance=ExtResource( 11 )]
-position = Vector2( 930.15, 1049.14 )
+[node name="escalator_half_right3" parent="." instance=ExtResource( 7 )]
+position = Vector2( 840, 1080 )
+z_index = 5
+z_as_relative = false
 
-[node name="front_door" type="Sprite" parent="."]
-position = Vector2( 960, 1029 )
-texture = ExtResource( 12 )
+[node name="escalator_full_right4" parent="." instance=ExtResource( 9 )]
+position = Vector2( 460, 380 )
+z_index = 5
+z_as_relative = false
 
-[node name="door" parent="." instance=ExtResource( 13 )]
+[node name="player1" parent="." instance=ExtResource( 10 )]
+position = Vector2( 880, 1058 )
 
-[node name="door2" parent="." instance=ExtResource( 13 )]
-position = Vector2( 1206.34, 1021.05 )
+[node name="player2" parent="." instance=ExtResource( 11 )]
+position = Vector2( 1040, 1058 )

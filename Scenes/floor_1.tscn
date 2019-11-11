@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://Scripts/floor1.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/floor_1.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Building/placeholder.jpeg" type="Texture" id=2]
 [ext_resource path="res://Sprites/Building/building.png" type="Texture" id=3]
 [ext_resource path="res://Scenes/left_elevator.tscn" type="PackedScene" id=4]
@@ -141,7 +141,7 @@ z_index = 5
 z_as_relative = false
 
 [node name="player1" parent="." instance=ExtResource( 10 )]
-position = Vector2( 880, 1058 )
+position = Vector2( 870.43, 1058 )
 
 [node name="front_door" type="Sprite" parent="."]
 position = Vector2( 960, 1029 )
