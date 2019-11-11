@@ -5,6 +5,7 @@ var available = true
 var player1
 var player2
 var touching_door
+var item_preload = preload("res://Scenes/spawn_item.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -18,10 +19,14 @@ func _process(delta):
 		self.find_node("closed").visible = false
 		touching_door = self.get_overlapping_bodies()
 		if touching_door.find(player1) != -1:
+			var cur_item = item_preload.instance()
+			self.add_child(cur_item)
 			player1.current_stuff += 1
 			available = false
 			print(player1.total_stuff)
 		if touching_door.find(player2) != -1:
+			var cur_item = item_preload.instance()
+			self.add_child(cur_item)
 			player2.current_stuff += 1
 			available = false
 			print(player2.total_stuff)

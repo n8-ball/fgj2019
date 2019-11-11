@@ -3,7 +3,7 @@ extends Sprite
 # Declare member variables here. Examples:
 var total_frames = 8
 var cur_frame = 0
-var animation_speed = 0.05
+var animation_speed = 0.1
 var animation_timer = 0
 var cur_dir = 0
 
