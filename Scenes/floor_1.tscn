@@ -1,20 +1,20 @@
 [gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scripts/floor1.gd" type="Script" id=1]
-[ext_resource path="res://Sprites/placeholder.jpeg" type="Texture" id=2]
-[ext_resource path="res://Sprites/building.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Building/placeholder.jpeg" type="Texture" id=2]
+[ext_resource path="res://Sprites/Building/building.png" type="Texture" id=3]
 [ext_resource path="res://Scenes/left_elevator.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/right_elevator.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/floor.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/escalator_half_right.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/escalator_full_left.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/escalator_full_right.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Scenes/player2.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Scenes/player1.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Sprites/main_door.png" type="Texture" id=12]
+[ext_resource path="res://Scenes/player1.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Sprites/Building/main_door.png" type="Texture" id=11]
+[ext_resource path="res://Scenes/player2.tscn" type="PackedScene" id=12]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 10, 450 )
+extents = Vector2( 30, 450 )
 
 [node name="floor_1" type="Node2D"]
 z_index = -20
@@ -43,13 +43,13 @@ texture = ExtResource( 3 )
 [node name="left_wall" type="StaticBody2D" parent="building"]
 
 [node name="left_wall_box" type="CollisionShape2D" parent="building/left_wall"]
-position = Vector2( -510, 80 )
+position = Vector2( -530, 80 )
 shape = SubResource( 1 )
 
 [node name="right_wall" type="StaticBody2D" parent="building"]
 
 [node name="right_wall_box" type="CollisionShape2D" parent="building/right_wall"]
-position = Vector2( 510, 80 )
+position = Vector2( 530, 80 )
 shape = SubResource( 1 )
 
 [node name="left_elevator" parent="." instance=ExtResource( 4 )]
@@ -140,12 +140,12 @@ scale = Vector2( -1, 1 )
 z_index = 5
 z_as_relative = false
 
-[node name="player2" parent="." instance=ExtResource( 10 )]
-position = Vector2( 1040, 1058 )
-
-[node name="player1" parent="." instance=ExtResource( 11 )]
+[node name="player1" parent="." instance=ExtResource( 10 )]
 position = Vector2( 880, 1058 )
 
 [node name="front_door" type="Sprite" parent="."]
 position = Vector2( 960, 1029 )
-texture = ExtResource( 12 )
+texture = ExtResource( 11 )
+
+[node name="player2" parent="." instance=ExtResource( 12 )]
+position = Vector2( 1040, 1058 )

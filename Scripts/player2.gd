@@ -8,11 +8,12 @@ var dir = 0
 var fall_acceleration_default = 1
 var max_fall_speed_default = 20
 
-#Jumping
+#Jumping Defaults
 var jump_speed_default = 0.5
 var jump_time_default = 15
 var jump_short_hop_height = 0.3
 
+#Moving
 var moving_right = 0
 var moving_left = 0
 
@@ -22,20 +23,17 @@ var jumping = 0
 var grounded = 0
 
 #Attacking
-var attack_time = 0.4
-var attacking_timer = 0
-var attacking = 0
-
-#Attacking
-var attacking_cooldown = 0.3
-var punch_stun_timer = 0.6
-var throw_stun_timer = 1.5
-var stun_timer = 0
-var am_hit = 0
-var things_hit
 var other_player
-var am_rolling = false
-var am_thrown = false
+var attacking = 0
+var attacking_frames = 20
+var rolling = 0
+var throwing = 0
+var thrown_frames = 60
+var throw_start = 40
+var throw_dir = 0
+var throw_speed = 40
+var when_to_slide = 0.3
+
 
 #Score
 var total_stuff
@@ -44,36 +42,42 @@ var in_elevator = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	other_player = self.get_parent().find_node("player1")
+	other_player = get_parent().find_node("player1")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	move_player(delta)
+	move_player()
+	move_hands()
+
+func move_hands():
+	if dir == 0:
+		self.find_node("fist").find_node("fist_box").position = Vector2(12, -26)
+	else:
+		self.find_node("fist").find_node("fist_box").position = Vector2(-12, -26)
 
 func animate(animation):
 	self.find_node("running").visible = false
 	self.find_node("standing").visible = false
 	self.find_node("punching").visible = false
-	self.find_node("hurt").visible = false
 	self.find_node("rolling").visible = false
-	self.find_node("thrown").visible = false
+	self.find_node("throwing").visible = false
+	self.find_node("sliding").visible = false
 	self.find_node(animation).visible = true
 	self.find_node(animation).flip_h = dir
 	
 # Controls inputs and calls physics commands
-func move_player(delta):
-	if !am_hit && !am_rolling && !am_thrown:
-		if !attacking:
+func move_player():
+	if !rolling && !throwing:
+		if!attacking:
 			control_right()
 			control_left()
 			control_move()
 		control_jumping()
-		control_attacking(delta)
-	if !am_rolling && !am_thrown:
 		control_falling()
-	control_hurting(delta)
-	if self.find_node("rolling").cur_frame == self.find_node("rolling").total_frames - 1:
-		am_rolling = false
+	if !rolling && !throwing:
+		control_attacking()
+	control_throwing()
+	control_rolling()
 
 func control_right():
 	moving_right = false
@@ -127,62 +131,57 @@ func control_falling():
 	if !grounded && !falling && !jumping:
 		falling += 1
 
-func get_hit(which_attack):
-	am_hit = which_attack
-	self.find_node("thrown").cur_frame = 0
+func set_throwing(passed_dir):
+	throwing = 1
+	throw_dir = passed_dir
+	if passed_dir == 1:
+		self.global_position += Vector2(throw_start, 0)
+	else:
+		self.global_position += Vector2(-throw_start, 0)
+	other_player.animate("invisible")
+	self.find_node("rolling").cur_frame = 0
 
-func control_punched():
-	animate("hurt")
-	if stun_timer > punch_stun_timer:
-		am_hit = 0
-		stun_timer = 0
-
-func control_thrown():
-	animate("thrown")
-	self.global_position = other_player.global_position
-	if stun_timer > throw_stun_timer:
-		self.find_node("hurt_box").disabled = false
-		am_thrown = false
-		am_hit = 0
-		stun_timer = 0
-
-func control_hurting(delta):
-	stun_timer += delta
-	if am_hit == 1:
-		control_punched()
-	elif am_hit == 2:
-		am_thrown = true
-		self.find_node("hurt_box").disabled = true
-		control_thrown()
-	
-
-func hit_opponent(which_attack):
-	other_player.get_hit(which_attack)
-	
-
-func control_attacking(delta):
-	if Input.is_key_pressed(KEY_CONTROL) && !attacking:
-		attacking = 1
-		attacking_timer = 0
-		self.find_node("fist").find_node("fist_box").disabled = false
+func control_attacking():
+	if Input.is_key_pressed(KEY_CONTROL) && !attacking && !rolling:
+		attacking += 1
 	if attacking:
+		self.find_node("fist").find_node("fist_box").disabled = false
+		var overlapping_bodies = self.find_node("fist").get_overlapping_bodies()
+		attacking += 1
 		animate("punching")
-		things_hit = self.find_node("fist").get_overlapping_bodies()
-		if things_hit.find(other_player) != -1:
-			if other_player.dir == self.dir:
-				hit_opponent(2)
-				self.animate("rolling")
-				am_rolling = true
-			else:
-				hit_opponent(1)
-			self.find_node("fist").find_node("fist_box").disabled = true
-		attacking_timer += delta
-		if attacking_timer < attack_time * 0.5:
+		if attacking < attacking_frames / 2:
 			self.find_node("punching").frame = 0
 		else:
 			self.find_node("punching").frame = 1
-		if attacking_timer > attack_time:
+		if other_player in overlapping_bodies:
+			other_player.set_throwing(dir)
+			rolling = 1
+			self.animate("rolling")
+			self.find_node("rolling").cur_frame = 0
 			attacking = 0
-			attacking_timer = 0
+		if attacking > attacking_frames:
+			attacking = 0
 	else:
 		self.find_node("fist").find_node("fist_box").disabled = true
+
+func control_throwing():
+	if throwing:
+		animate("invisible")
+	if throwing == 1 && other_player.find_node("rolling").cur_frame == other_player.find_node("rolling").total_frames - 2:
+		throwing = 2
+	if throwing >= 2:
+		throwing += 1
+		animate("throwing")
+		if throw_dir == 1:
+			self.global_position += Vector2(throw_speed/throwing, 0)
+		else:
+			self.global_position += Vector2(-throw_speed/throwing, 0)
+	if throwing > thrown_frames * when_to_slide:
+		animate("sliding")
+		self.find_node("sliding").flip_h = throw_dir
+	if throwing > thrown_frames:
+		throwing = 0
+
+func control_rolling():
+	if self.find_node("rolling").cur_frame == self.find_node("rolling").total_frames - 1:
+		rolling = 0
